@@ -1,0 +1,277 @@
+:root {
+  --bg: #1b1d22;
+  --panel: #24272e;
+  --panel-2: #2d3038;
+  --text: #e8e9ed;
+  --muted: #9aa0aa;
+  --accent: #6aa6ff;
+  --accent-2: #4a86e0;
+  --border: #353944;
+  --danger: #e26a6a;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+button:hover:not(:disabled) { background: #353a45; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.primary {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: white;
+}
+button.primary:hover:not(:disabled) { background: var(--accent); }
+
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+
+/* -------- Upload screen -------- */
+.upload-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+.upload-card {
+  width: min(720px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+}
+.upload-card h1 { margin-top: 0; }
+.lead { color: var(--muted); margin-top: 0.25rem; }
+.drop-zone {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  text-align: center;
+  transition: background 120ms, border-color 120ms;
+}
+.drop-zone.dragover {
+  background: rgba(106,166,255,0.08);
+  border-color: var(--accent);
+}
+.file-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  text-align: left;
+}
+@media (max-width: 600px) {
+  .file-row { grid-template-columns: 1fr; }
+}
+.file-label {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.file-label > span:first-child { font-weight: 600; }
+.file-name { font-size: 0.9em; word-break: break-all; }
+.help {
+  margin-top: 1.25rem;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+}
+.help summary { cursor: pointer; }
+.help pre {
+  background: #15171b;
+  padding: 0.75rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.hint { margin-top: 1rem; font-size: 0.9em; }
+
+/* -------- Presenter screen -------- */
+.presenter-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.85rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  gap: 0.75rem;
+}
+.toolbar-left, .toolbar-right { display: flex; gap: 0.4rem; align-items: center; }
+.page-indicator {
+  font-variant-numeric: tabular-nums;
+  padding: 0 0.5rem;
+  min-width: 5ch;
+  text-align: center;
+}
+.badge {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.85em;
+  color: var(--muted);
+}
+
+.presenter-grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "current next"
+    "current notes";
+  gap: 0.6rem;
+  padding: 0.6rem;
+  min-height: 0;
+}
+.pane {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+.current-pane { grid-area: current; }
+.next-pane { grid-area: next; }
+.notes-pane { grid-area: notes; }
+.pane-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  color: var(--muted);
+  padding: 0.4rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel-2);
+}
+.canvas-wrap {
+  flex: 1 1 auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+  background: #0e1014;
+  min-height: 0;
+  overflow: hidden;
+}
+.canvas-wrap canvas {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  background: white;
+}
+
+/* Pointer overlay (presenter side: just to capture coordinates / show a faint dot) */
+.pointer-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.current-pane .canvas-wrap { cursor: crosshair; }
+
+.notes-rendered, .notes-editor {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 0.85rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  background: var(--panel);
+  color: var(--text);
+  min-height: 0;
+}
+.notes-editor {
+  border: 0;
+  outline: none;
+  resize: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
+.notes-rendered :is(h1,h2,h3,h4) { margin-top: 0.6em; }
+.notes-rendered pre {
+  background: #15171b;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+.notes-rendered code {
+  background: #15171b;
+  padding: 0.05em 0.35em;
+  border-radius: 4px;
+}
+.notes-rendered blockquote {
+  border-left: 3px solid var(--accent-2);
+  margin-left: 0;
+  padding-left: 0.85rem;
+  color: var(--muted);
+}
+
+/* -------- Audience view -------- */
+.audience {
+  background: black;
+  color: white;
+  overflow: hidden;
+  cursor: none;
+}
+.audience-stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.audience-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  color: #888;
+  pointer-events: none;
+}
+.audience-stage canvas {
+  max-width: 100%;
+  max-height: 100%;
+  background: white;
+  display: block;
+}
+.audience-pointer {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,80,80,0.85) 0%, rgba(255,80,80,0.45) 55%, rgba(255,80,80,0) 75%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: opacity 200ms;
+  mix-blend-mode: screen;
+}

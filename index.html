@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDF Presenter</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="presenter">
+  <!-- Landing / upload screen -->
+  <section id="upload-screen" class="upload-screen">
+    <div class="upload-card">
+      <h1>PDF Presenter</h1>
+      <p class="lead">Drop your slides and (optionally) your speaker notes, then start presenting.</p>
+
+      <div id="drop-zone" class="drop-zone">
+        <p><strong>Drag &amp; drop</strong> a PDF and a notes file here</p>
+        <p class="muted">or pick them below</p>
+
+        <div class="file-row">
+          <label class="file-label">
+            <span>PDF slides</span>
+            <input id="pdf-input" type="file" accept="application/pdf,.pdf" />
+            <span id="pdf-name" class="file-name muted">No file selected</span>
+          </label>
+
+          <label class="file-label">
+            <span>Notes (markdown, optional)</span>
+            <input id="notes-input" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" />
+            <span id="notes-name" class="file-name muted">No file selected</span>
+          </label>
+        </div>
+      </div>
+
+      <button id="start-btn" class="primary" disabled>Start presenting</button>
+
+      <details class="help">
+        <summary>Notes file format</summary>
+        <p>The notes file is plain markdown. Separate the notes for each slide with a line containing only <code>---</code>. The notes before the first <code>---</code> belong to slide 1, the next chunk to slide 2, and so on. If you have more slides than note sections the remaining slides simply have empty notes.</p>
+        <pre>Notes for slide 1.
+
+---
+
+Notes for slide 2 — **markdown** is rendered.
+
+---
+
+Notes for slide 3.</pre>
+      </details>
+
+      <p class="hint muted">Tip: when you click <em>Start presenting</em> a second window opens for the audience. Drag it to your projector / external monitor and (usually) press F11 to make it fullscreen.</p>
+    </div>
+  </section>
+
+  <!-- Presenter screen -->
+  <section id="presenter-screen" class="presenter-screen hidden">
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <button id="prev-btn" title="Previous slide (Left arrow)">&larr;</button>
+        <span id="page-indicator" class="page-indicator">– / –</span>
+        <button id="next-btn" title="Next slide (Space / Right arrow)">&rarr;</button>
+      </div>
+      <div class="toolbar-center">
+        <span class="badge">Presenter view</span>
+      </div>
+      <div class="toolbar-right">
+        <button id="edit-toggle">Edit notes</button>
+        <button id="download-notes">Download notes</button>
+        <button id="reopen-audience" title="Reopen audience window">Audience window</button>
+        <button id="exit-btn" title="Back to upload">Exit</button>
+      </div>
+    </header>
+
+    <main class="presenter-grid">
+      <div class="pane current-pane">
+        <div class="pane-label">Current slide</div>
+        <div id="current-canvas-wrap" class="canvas-wrap">
+          <canvas id="current-canvas"></canvas>
+          <div id="pointer-overlay" class="pointer-overlay"></div>
+        </div>
+      </div>
+
+      <div class="pane next-pane">
+        <div class="pane-label">Next slide</div>
+        <div class="canvas-wrap">
+          <canvas id="next-canvas"></canvas>
+        </div>
+      </div>
+
+      <div class="pane notes-pane">
+        <div class="pane-label">
+          <span>Notes for current slide</span>
+          <span id="notes-mode" class="muted">rendered</span>
+        </div>
+        <div id="notes-rendered" class="notes-rendered"></div>
+        <textarea id="notes-editor" class="notes-editor hidden" spellcheck="true" placeholder="Notes for this slide…"></textarea>
+      </div>
+    </main>
+  </section>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/presenter.js"></script>
+</body>
+</html>
