@@ -32,7 +32,6 @@
   const currentCanvas = $('current-canvas');
   const nextCanvas = $('next-canvas');
   const currentWrap = $('current-canvas-wrap');
-  const pointerOverlay = $('pointer-overlay');
   const pageIndicator = $('page-indicator');
   const notesRendered = $('notes-rendered');
   const notesEditor = $('notes-editor');
@@ -340,13 +339,9 @@
       return;
     }
     sendPointer(c.x, c.y, true);
-    // Optional: also show a small dot on the presenter side so they know where they're pointing.
-    pointerOverlay.style.background =
-      `radial-gradient(circle at ${c.x * 100}% ${c.y * 100}%, rgba(106,166,255,0.22) 0%, rgba(106,166,255,0) 3.5%)`;
   });
   currentWrap.addEventListener('mouseleave', () => {
     sendPointer(0, 0, false);
-    pointerOverlay.style.background = '';
   });
 
   // Clean up the audience window when this window closes.
