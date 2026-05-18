@@ -57,19 +57,30 @@ Notes for slide 3.</pre>
     <header class="toolbar">
       <div class="toolbar-left">
         <button id="prev-btn" title="Previous slide (Left arrow)">&larr;</button>
-        <span id="page-indicator" class="page-indicator">– / –</span>
+        <input id="page-input" type="number" min="1" class="page-input" placeholder="–" title="Jump to slide" />
+        <span id="page-total" class="page-total">/ –</span>
         <button id="next-btn" title="Next slide (Space / Right arrow)">&rarr;</button>
+        <button id="toggle-drawer" title="Slide list">Slides</button>
       </div>
       <div class="toolbar-center">
         <span class="badge">Presenter view</span>
       </div>
       <div class="toolbar-right">
+        <button id="maximize-notes" title="Hide next-slide preview and give notes the full right column">Maximize notes</button>
         <button id="edit-toggle">Edit notes</button>
         <button id="download-notes">Download notes</button>
         <button id="reopen-audience" title="Reopen audience window">Audience window</button>
         <button id="exit-btn" title="Back to upload">Exit</button>
       </div>
     </header>
+
+    <aside id="slide-drawer" class="slide-drawer">
+      <div class="drawer-header">
+        <span>Slides</span>
+        <button id="close-drawer" title="Close" aria-label="Close">&times;</button>
+      </div>
+      <ol id="slide-list" class="slide-list"></ol>
+    </aside>
 
     <main class="presenter-grid">
       <div class="pane current-pane">

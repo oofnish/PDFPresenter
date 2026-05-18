@@ -12,6 +12,13 @@ folder as-is to GitHub Pages, GitLab Pages, or any static host.
   file on the landing screen.
 - **Keyboard / click navigation** — `Space`, `→`, `PageDown`, or clicking the
   slide advance; `←` / `PageUp` go back; `Home` / `End` jump to the ends.
+  Type a page number into the toolbar input and press `Enter` to jump.
+- **Slide list drawer** with auto-extracted titles. The title for slide *N*
+  is the first markdown heading (`#`…`######`) inside that slide's notes;
+  slides with no heading show a muted `Slide N` placeholder. Click an entry
+  to jump. Titles update live as you edit.
+- **Maximize notes** button hides the next-slide preview and gives the
+  notes pane the full right column when you need more reading room.
 - **Live notes for the current slide** rendered as markdown, with an
   *Edit notes* toggle to switch into a plain-text editor.
 - **Edits persist while you navigate** and can be saved with **Download notes**
